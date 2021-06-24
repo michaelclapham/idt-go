@@ -25,4 +25,17 @@ func Extract(filename string) {
 	t := time.Now()
 	elapsed := t.Sub(start)
 	fmt.Println("Unzipping", filename, "took", elapsed)
+
+	storyDir := path.Join(outputFolder, "Stories")
+	storyFiles, err := os.ReadDir(storyDir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, storyFile := range storyFiles {
+		entries := GetTranslationEntriesForStory(path.Join(storyDir, storyFile.Name()))
+		for _, entry := range entries {
+			fmt.Println(entry)
+		}
+	}
 }
