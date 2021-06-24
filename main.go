@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path"
 	"regexp"
+	"time"
 )
 
 func main() {
@@ -37,11 +39,15 @@ func extract(filename string) {
 	}
 
 	println("Extracting strings from ", filename)
+	start := time.Now()
 	outputFolder := path.Join("output", FilenameWithoutExtension(filename))
 	_, err := Unzip(filename, outputFolder)
 	if err != nil {
 		log.Fatal(err)
 	}
+	t := time.Now()
+	elapsed := t.Sub(start)
+	fmt.Println("Unzipping", filename, "took", elapsed)
 }
 
 func translate(filename string) {
