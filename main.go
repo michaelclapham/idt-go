@@ -1,6 +1,9 @@
 package main
 
-import "os"
+import (
+	"os"
+	"regexp"
+)
 
 func main() {
 	// Use arguments to decide command and which file to apply to
@@ -17,6 +20,12 @@ func main() {
 	} else {
 		println("Unknown command", os.Args[1])
 	}
+}
+
+func FilenameWithoutExtension(filename string) string {
+	re := regexp.MustCompile(`(.*)\.[^\.]*$`)
+	matches := re.FindAllStringSubmatch(filename, -1)
+	return matches[0][1]
 }
 
 func extract(filename string) {
