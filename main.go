@@ -1,12 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"os"
-	"path"
-	"regexp"
-	"time"
 )
 
 func main() {
@@ -18,38 +13,10 @@ func main() {
 	}
 
 	if os.Args[1] == "extract" {
-		extract(os.Args[2])
+		Extract(os.Args[2])
 	} else if os.Args[1] == "translate" {
-		translate(os.Args[2])
+		Translate(os.Args[2])
 	} else {
 		println("Unknown command", os.Args[1])
 	}
-}
-
-func FilenameWithoutExtension(filename string) string {
-	re := regexp.MustCompile(`(.*)\.[^\.]*$`)
-	matches := re.FindAllStringSubmatch(path.Base(filename), -1)
-	return matches[0][1]
-}
-
-func extract(filename string) {
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		println("Looking in input folder for ", filename)
-		filename = path.Join("./input", filename)
-	}
-
-	println("Extracting strings from ", filename)
-	start := time.Now()
-	outputFolder := path.Join("output", FilenameWithoutExtension(filename))
-	_, err := Unzip(filename, outputFolder)
-	if err != nil {
-		log.Fatal(err)
-	}
-	t := time.Now()
-	elapsed := t.Sub(start)
-	fmt.Println("Unzipping", filename, "took", elapsed)
-}
-
-func translate(filename string) {
-	println("Translating file ", filename)
 }
