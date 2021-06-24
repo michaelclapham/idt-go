@@ -42,16 +42,15 @@ func GetTranslationEntriesForStory(filename string) []TranslationEntry {
 	}
 
 	storyId := storyXML.Story.Self
-	fmt.Println("Story id", storyId)
+	// fmt.Println("Story id", storyId)
 
 	var translationEntries []TranslationEntry
 
 	for _, psr := range storyXML.Story.ParagraphStyleRange {
-		for i, csr := range psr.CharacterStyleRange {
-			fmt.Println("CSR", i, csr.Content)
+		for _, csr := range psr.CharacterStyleRange {
 			translationEntries = append(translationEntries, TranslationEntry{
 				SourceText: csr.Content,
-				Text:       csr.Text,
+				Text:       csr.Content,
 				StoryId:    storyId,
 			})
 		}
